@@ -1,4 +1,4 @@
-const M = {
+const minimonitornpm = {
   install: function (Vue) {
     window.onerror = function (msg, url, row, col, error) {
       console.log(msg, url, row, col, error);
@@ -48,4 +48,5 @@ const M = {
   },
 };
 
-export { M };
+export { minimonitornpm };
+export default minimonitornpm;
