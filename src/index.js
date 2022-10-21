@@ -1,3 +1,4 @@
+let id = 0;
 const minimonitornpm = {
   install: function (Vue) {
     // 捕获 异步 错误
