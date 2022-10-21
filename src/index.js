@@ -3,7 +3,6 @@ const minimonitornpm = {
   install: function (Vue) {
     // 捕获 异步 错误
     window.onerror = function (msg, url, row, col, error) {
-      console.log("w2", typeof url);
       let path = url.replace(/(\.)|(=)/g, "-");
       let e = {
         id: ++id,
@@ -12,7 +11,6 @@ const minimonitornpm = {
         msg: error.toString(),
         path,
       };
-      console.log("e", e);
       add(e);
       return true;
     };
@@ -30,7 +28,6 @@ const minimonitornpm = {
     window.addEventListener(
       "error",
       (msg, url, row, col, error) => {
-        // console.log(msg, url, row, col, error);
         let e = {};
 
         if (msg) {
