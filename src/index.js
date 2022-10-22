@@ -35,6 +35,7 @@ const minimonitornpm = {
             case "IMG":
               e = {
                 id: ++id,
+                sendEmail: true,
                 type: "img",
                 href: location.href,
                 msg: "图片加载错误 可能是 src 找不到",
