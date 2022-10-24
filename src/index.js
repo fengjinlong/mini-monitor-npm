@@ -1,7 +1,48 @@
 let id = 0;
+let URL = "http://139.155.69.214:8083";
+// let URL = "http://127.0.0.1:8083";
 const minimonitornpm = {
   install: function (Vue) {
+    const indicators = {};
+    let {
+      domainLookupEnd,
+      domainLookupStart,
+      connectEnd,
+      connectStart,
+      requestStart,
+      responseEnd,
+      responseStart,
+      navigationStart,
+      loadEventStart,
+      loadEventEnd,
+    } = performance.timing;
+    indicators.dns = domainLookupEnd - domainLookupStart;
+    indicators.tcp = connectEnd - connectStart;
+    indicators.requestPending = responseStart - requestStart;
+    indicators.documentDown = responseEnd - responseStart;
+    indicators.onload = loadEventEnd - loadEventStart;
+    indicators.jsmemoey =
+      (
+        performance.memory.usedJSHeapSize / performance.memory.totalJSHeapSize
+      ).toFixed(4) *
+        100 +
+      "%";
     // 捕获 异步 错误
+    FT.then(({ fcp, fmp, tti }) => {
+      indicators.fcp = fcp;
+      indicators.fmp = fmp;
+      indicators.tti = tti;
+      // console.log("首次内容绘制（FCP） - %dms", fcp);
+      // console.log("首次有意义绘制（FMP） - %dms", fmp);
+      // console.log("可交互时间（TTI） - %dms", tti);
+      const syncRequest = (url, data = {}) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, false);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        xhr.send(JSON.stringify(data));
+      };
+      syncRequest(URL + "/saveIndicators", indicators);
+    });
     window.onerror = function (msg, url, row, col, error) {
       let path = url.replace(/(\.)|(=)/g, "-");
       let e = {
@@ -81,13 +122,12 @@ const minimonitornpm = {
     });
   },
 };
-const idsPoll = [];
 function add(data) {
   if (!data.id) return;
   const blob = new Blob([JSON.stringify(data)], {
     type: "application/x-www-form-urlencoded",
   });
-  navigator.sendBeacon("http://139.155.69.214:8083/add1", blob);
+  navigator.sendBeacon(URL + "/add1", blob);
 }
 
 export { minimonitornpm };
