@@ -1,3 +1,4 @@
+import FT from "fmp-tti";
 let id = 0;
 let URL = "http://139.155.69.214:8083";
 // let URL = "http://127.0.0.1:8083";
