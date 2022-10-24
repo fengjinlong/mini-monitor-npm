@@ -22,11 +22,14 @@ const minimonitornpm = {
     indicators.requestPending = responseStart - requestStart;
     indicators.documentDown = responseEnd - responseStart;
     indicators.onload = loadEventEnd - loadEventStart;
+    indicators.whiteScreen = responseStart - navigationStart;
     indicators.jsmemoey =
-      (
-        performance.memory.usedJSHeapSize / performance.memory.totalJSHeapSize
-      ).toFixed(4) *
-        100 +
+      Math.floor(
+        (performance.memory.usedJSHeapSize /
+          performance.memory.totalJSHeapSize) *
+          1000
+      ) /
+        10 +
       "%";
     // 捕获 异步 错误
     FT.then(({ fcp, fmp, tti }) => {
