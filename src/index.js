@@ -133,6 +133,7 @@ function add(data) {
   });
   navigator.sendBeacon(URL + "/add1", blob);
 }
+console.log("2023", 2023);
 
 export { minimonitornpm };
 export default minimonitornpm;
